@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生日快乐，我的宝</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #ff76a4;
+            margin: 0 auto;
+            padding: 0;
+            overflow: auto;
+        }
+
+        .button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #FF0083;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.5em;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .container {
+            text-align: center;
+            padding: 50px;
+            display: none;
+        }
+
+        .header {
+            font-size: 2.5em;
+            color: #FF0083;
+            margin-bottom: 20px;
+        }
+
+        .message {
+            font-size: 1.5em;
+            color: #333;
+            line-height: 1.5;
+            display: inline-block;
+            text-align: left;
+            white-space: pre-wrap;
+        }
+
+        .heart2 {
+            position: absolute;
+            width: 100px;
+            height: 90px;
+            background: transparent;
+            transform: scale(0);
+            animation: scaleUp 2s forwards;
+            opacity: 1;
+        }
+
+        .heart2::before,
+        .heart2::after {
+            position: absolute;
+            content: "";
+            left: 50%;
+            top: 0;
+            width: 50%;
+            height: 80px;
+            background: #ff24ab;
+            border-radius: 50% 50% 0 0;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+        }
+
+        .heart2::after {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+
+        @keyframes scaleUp {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 0;
+            }
+        }
+
+        .hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+            display: none;
+        }
+
+        .heart {
+            font-size: 5em;
+            color: #ffc0cb;
+            margin-top: 20px;
+            position: fixed;
+            bottom: 60px;
+            right: 10px;
+        }
+
+        .fireworks-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            display: none;
+            z-index: 15;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/fireworks-js@latest/dist/index.umd.js"></script>
+</head>
+
+<body>
+    <button class="button" id="openButton">Happy birthday</button>
+    <div class="hearts" id="hearts"></div>
+    <div class="container" id="content">
+        <div class="header">生日快乐，宝贝！</div>
+        <div id="message" class="message"></div>
+        <div class="heart">❤️</div>
+    </div>
+    <div class="fireworks-container" id="fireworks"></div>
+    <audio id="birthdayMusic" src="./晴れが来る.m4a" preload="auto"></audio>
+
+    <script>
+        const button = document.getElementById('openButton');
+        const content = document.getElementById('content');
+        const music = document.getElementById('birthdayMusic');
+        const heartsContainer = document.getElementById('hearts');
+        const fireworksContainer = document.getElementById('fireworks');
+
+        button.addEventListener('click', () => {
+            button.style.display = 'none';
+            heartsContainer.style.display = 'block';
+            music.play();
+            // Create heart elements and add to the container
+            for (let i = 0; i < 100; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart2';
+                heart.style.top = Math.random() * 100 + 'vh';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.transform = `scale(${Math.random() * 1})`;
+                heart.style.animationDelay = `${Math.random() * 1}s`;
+                heartsContainer.appendChild(heart);
+            }
+
+            // Start displaying the content after hearts animation
+            setTimeout(() => {
+                content.style.display = 'block';
+                typeEffect();
+            }, 4000); // Adjust delay as needed to match the animation duration
+        });
+
+        const text = `亲爱的宝贝，生日快乐！
+
+今天是一个特别的日子，我想对你说，我爱你胜过一切。
+
+你的笑容是我每天最大的动力，你的陪伴是我一生的幸福源泉。
+
+记得我们在一起的每一个瞬间，我都感到无比的幸运。
+
+愿我们的爱情，永远甜蜜，永远美丽。
+
+今天，不只是你的生日，也是我最幸福的日子，因为我能陪在你身边，与你一同庆祝这特别的时刻。
+
+今天是我们恋爱的第104天。
+
+在这段时间里，我们在很多事情上的观点和看法都是如此一致，就像两颗星星在浩瀚的宇宙中不期而遇，默契地闪烁着光芒。
+
+你喜欢吃饭时加点醋，那独特的味道就像你给我的生活带来的新鲜和惊喜。
+
+我们一起看综艺节目，那些欢笑声仿佛在诉说着我们共享的欢乐时光。
+
+我们一起吃饭，一起逛街，一起看电影，一起散步，一起分享生活的点点滴滴。
+
+每天早上，你的声音是我醒来的第一道阳光，让我一天都充满了活力。
+
+下班后，见到你微笑着的样子，我的心中便涌起一股温暖。
+
+接你回家的路上，我们聊着一天的琐事和心情，这样的平凡却又如此珍贵。
+
+在这特别的日子里，我想告诉你，我非常爱你。
+
+你的每一个习惯、每一个笑容，都深深地刻在我的心里。
+
+未来的日子里，我愿意继续陪伴你，呵护你，让我们一起度过更多美好的时光。
+
+生日快乐，亲爱的。
+
+愿你的每一天都如今天一样灿烂美好。`;
+
+        let index = 0;
+        const speed = 10;
+
+        function typeEffect() {
+            const message = document.getElementById('message');
+            if (index < text.length) {
+                message.innerHTML += text.charAt(index);
+                index++;
+                setTimeout(typeEffect, speed);
+            } else {
+                showFireworks();
+            }
+        }
+
+        function showFireworks() {
+    // 显示烟花容器
+    fireworksContainer.style.display = 'block';
+    // 创建一个新的烟花实例
+    const fireworks = new Fireworks.default(fireworksContainer, {
+        maxRockets: 10,            // 最大生成火箭数量
+        rocketSpawnInterval: 50, // 检查是否生成新火箭的时间间隔（毫秒）
+        numParticles: 1000,        // 火箭爆炸时生成的粒子数量
+        explosionMinHeight: 0.2,  // 火箭可以爆炸的最小高度（容器高度的百分比）
+        explosionMaxHeight: 0.9,  // 火箭可以爆炸的最大高度（容器高度的百分比）
+        explosionChance: 0.08     // 每次更新时火箭爆炸的概率
+    });
+    // 开始烟花效果
+    fireworks.start();
+    // 10秒后停止烟花效果
+    setTimeout(() => fireworks.stop(), 1000000);
+}
+    </script>
+</body>
+
+</html>
